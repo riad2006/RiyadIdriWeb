@@ -81,6 +81,15 @@ label span {
     font-weight: bold;
 }
 
+#length-value {
+    color: var(--text);
+    font-weight: bold;
+    background: rgba(255, 182, 193, 0.1);
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+}
+
 input[type="range"] {
     -webkit-appearance: none;
     width: 100%;
