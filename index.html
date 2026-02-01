@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Riyad idri">
+    <title>Pastel Password Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Pastel Password Generator</h1>
+        
+        <div class="controls">
+            <label for="length">Password Length: <span id="length-value">12</span></label>
+            <input type="range" id="length" min="8" max="32" value="12">
+        </div>
+
+        <div class="password-display">
+            <input type="text" id="password" readonly placeholder="Your password will appear here">
+            <button id="copy-btn">Copy</button>
+        </div>
+
+        <div class="actions">
+            <button id="generate-btn">Generate Password</button>
+            <button id="reset-btn">Reset</button>
+        </div>
+    </div>
+
+    <script>
+        const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
+        
+        function genPass(len) {
+            let p = '';
+            for (let i = 0; i < len; i++) {
+                p += chars[Math.floor(Math.random() * chars.length)];
+            }
+            return p;
+        }
+
+        function updateLen() {
+            document.getElementById('length-value').textContent = document.getElementById('length').value;
+        }
+
+        function copyPass() {
+            const pass = document.getElementById('password');
+            if (pass.value) {
+                pass.select();
+                document.execCommand('copy');
+                const btn = document.getElementById('copy-btn');
+                btn.textContent = 'Copied!';
+                btn.style.backgroundColor = '#90ee90';
+                setTimeout(() => {
+                    btn.textContent = 'Copy';
+                    btn.style.backgroundColor = '#ffb6c1';
+                }, 2000);
+            }
+        }
+
+        function reset() {
+            document.getElementById('password').value = '';
+            document.getElementById('length').value = 12;
+            document.getElementById('length-value').textContent = '12';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('generate-btn').addEventListener('click', () => {
+                const len = parseInt(document.getElementById('length').value);
+                document.getElementById('password').value = genPass(len);
+            });
+
+            document.getElementById('copy-btn').addEventListener('click', copyPass);
+            document.getElementById('reset-btn').addEventListener('click', reset);
+            document.getElementById('length').addEventListener('input', updateLen);
+            updateLen();
+        });
+    </script>
+</body>
+</html>
